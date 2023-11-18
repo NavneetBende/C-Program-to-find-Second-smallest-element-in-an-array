@@ -1,35 +1,45 @@
 #include <stdio.h>
 #include <limits.h>
 
-int secSmallest(int arr[], int n)
+void get2ndSmallest(int arr[], int n)
 {
-    // assigning first element as smallest temporarily
-    int smallest = arr[0];
-    
-    // we find the smallest element here
-    for (int i=0; i < n; i++){
-        if(arr[i] < smallest)
-            smallest = arr[i];
+    int i, first, second;
+ 
+    /* The array must have 2 or more items */
+    if (n < 2)
+    {
+        printf(" Array has lesser than 2 items");
+        return;
     }
-    
-    // temporarily assinging largest max value
-    int sec_smallest = INT_MAX;
-    
-    // finding second smallest here
-    for (int i=0; i < n; i++){
-        if(arr[i] != smallest && arr[i] < sec_smallest)
-            sec_smallest = arr[i];
+ 
+    first = second = INT_MAX;
+    for (i = 0; i < n ; i ++)
+    {
+        /* If the current array element is smaller than the first
+        then update both first and second */
+        if (arr[i] < first)
+        {
+            second = first;
+            first = arr[i];
+        }
+ 
+        /* If arr[i] lies between first and second
+        then update second */
+        else if (arr[i] < second && arr[i] != first)
+            second = arr[i];
     }
-
-    return sec_smallest;
-    
+    if (second == INT_MAX)
+        printf("We don't have 2nd smallest item in array\n");
+    else
+        printf("The 2nd smallest : %d",second);
 }
+ 
 int main()
 {
     int arr[] = {70, 40, 30, 20, 10, 90};
-    
-    // get the length of the array
-    int len = sizeof(arr)/sizeof(arr[0]);    
-    
-    printf("The 2nd smallest : %d",secSmallest(arr, len));
+    int len = sizeof(arr)/sizeof(arr[0]);
+
+    get2ndSmallest(arr, len);
+
+    return 0;
 }
